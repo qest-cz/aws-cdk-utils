@@ -42,6 +42,20 @@ export class CloudFrontS3CustomDomain extends Construct {
         this.distribution = new CloudFrontWebDistribution(this, cloudfrontDistributionName, {
             defaultRootObject: 'index.html',
             viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            errorConfigurations: [
+                {
+                    errorCode: 404,
+                    responseCode: 200,
+                    errorCachingMinTtl: 0,
+                    responsePagePath: '/index.html',
+                },
+                {
+                    errorCode: 403,
+                    responseCode: 200,
+                    responsePagePath: '/index.html',
+                    errorCachingMinTtl: 0,
+                },
+            ],
             aliasConfiguration: {
                 acmCertRef: this.cert.certificateArn,
                 names: [this.hostedZone.zoneName],
