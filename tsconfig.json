@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "rootDir": "",
+      "outDir": "./dist",
+      "lib": ["es2016", "es2017.object", "es2017.string", "esnext.asynciterable"],
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "declaration": false,
+      "sourceMap": true,
+      "inlineSources": true,
+      "removeComments": true,
+      "skipLibCheck": true,
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "types": [
+        "@types/node"
+      ],
+    },
+    "include": [
+      "./src/**/*.ts"
+    ],
+    "exclude": [
+      "./node_modules/**/*"
+    ],
+  }
+  

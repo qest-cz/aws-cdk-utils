@@ -1,0 +1,18 @@
+src/**/*.js
+src/**/*.d.ts
+!src/typings/**/*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+dist/
+cdk.out/
+cdk.context.json
+.cache
+.idea
+.vscode
+
+coverage
+.nyc_output
+swagger.json
+yarn-error.log

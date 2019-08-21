@@ -1,0 +1,53 @@
+{
+  "name": "aws-cdk-utils",
+  "author": "Vít Habada <vithabada93@gmail.com>",
+  "version": "0.0.9",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prettier:run": "prettier all --write \"src/**/*.ts\"",
+    "prettier:check": "prettier all -l \"src/**/*.ts\"",
+    "tslint:run": "tslint --fix -c tslint.json -p .",
+    "tslint:check": "tslint -c tslint.json -p .",
+    "tsc:check": "tsc --noEmit",
+    "code:fix": "concurrently \"yarn tslint:run\" \"yarn prettier:run\"",
+    "code:check": "concurrently \"yarn prettier:check\" \"yarn tslint:check\" \"yarn tsc:check\""
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigateway": "1.4.0",
+    "@aws-cdk/aws-cloudfront": "1.4.0",
+    "@aws-cdk/aws-cloudwatch": "1.4.0",
+    "@aws-cdk/aws-cloudwatch-actions": "1.4.0",
+    "@aws-cdk/aws-events": "1.4.0",
+    "@aws-cdk/aws-events-targets": "1.4.0",
+    "@aws-cdk/aws-iam": "^1.4.0",
+    "@aws-cdk/aws-lambda": "1.4.0",
+    "@aws-cdk/aws-lambda-event-sources": "1.4.0",
+    "@aws-cdk/aws-route53": "1.4.0",
+    "@aws-cdk/aws-route53-targets": "1.4.0",
+    "@aws-cdk/aws-sns": "1.4.0",
+    "@aws-cdk/aws-sns-subscriptions": "1.4.0",
+    "@aws-cdk/aws-sqs": "1.4.0",
+    "@aws-cdk/aws-certificatemanager": "1.4.0",
+    "@aws-cdk/aws-s3": "1.4.0",
+    "@aws-cdk/aws-s3-deployment": "1.3.0",
+    "@aws-cdk/cx-api": "1.4.0",
+    "@aws-cdk/core": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "aws-cdk": "^1.4.0",
+    "concurrently": "^4.1.2",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.3.0",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.19.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.5.3"
+  }
+}
