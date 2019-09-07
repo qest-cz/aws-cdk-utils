@@ -6,6 +6,7 @@ import { Bucket } from '@aws-cdk/aws-s3';
 import { Construct } from '@aws-cdk/core';
 
 export interface CloudFrontS3CustomDomainProps {
+    bucket: Bucket;
     targetHostedZone: IHostedZone;
     delegateTo?: IHostedZone;
 }
@@ -16,7 +17,7 @@ export class CloudFrontS3CustomDomain extends Construct {
     public readonly distribution: CloudFrontWebDistribution;
     public readonly cert: DnsValidatedCertificate;
 
-    constructor(scope: Construct, id: string, bucket: Bucket, { targetHostedZone, delegateTo }: CloudFrontS3CustomDomainProps) {
+    constructor(scope: Construct, id: string, { bucket, targetHostedZone, delegateTo }: CloudFrontS3CustomDomainProps) {
         super(scope, id);
 
         const cloudfrontDistributionName = `Distribution`;
