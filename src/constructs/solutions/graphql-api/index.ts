@@ -1,8 +1,8 @@
-import { CfnBasePathMapping, RestApi } from '@aws-cdk/aws-apigateway';
+import { RestApi } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
 import { Construct } from '@aws-cdk/core';
 import { APIGatewayDashboard } from '../../../constructs/aws-cloudwatch';
-import { addMethod, addResource } from '../../../utils';
+import { addMethod, addResource, attachApiToCustomDomain } from '../../../utils';
 
 export interface GraphQLApiProps {
     handler: Function;
@@ -27,14 +27,7 @@ export class GraphQlApi extends Construct {
         this.dashboard = new APIGatewayDashboard(this, { ApiName, handlers: [this.handler] });
     }
 
-    public attachToApiDomain({ basePath, domainName }: { basePath: string; domainName: string }) {
-        const resourceName = `${domainName}${basePath}`.replace('.', '');
-
-        new CfnBasePathMapping(this, resourceName, {
-            basePath,
-            domainName,
-            restApiId: this.apiGateway.restApiId,
-            stage: this.apiGateway.deploymentStage.stageName,
-        });
+    public attachToApiDomain(basePath: string, domainName: string) {
+        attachApiToCustomDomain(this, this.apiGateway)({ basePath, domainName });
     }
 }

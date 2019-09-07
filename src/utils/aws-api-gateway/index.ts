@@ -1,5 +1,6 @@
-import { IResource, LambdaIntegration } from '@aws-cdk/aws-apigateway';
+import { CfnBasePathMapping, IResource, LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
+import { Construct } from '@aws-cdk/core';
 
 export type ResourceMapper = (parent: IResource) => IResource;
 export type ResourceCompositor = (path: string, ...rest: ResourceMapper[]) => ResourceMapper;
@@ -27,3 +28,20 @@ export const addResource: ResourceCompositor = (path: string, ...rest: ResourceM
 
               return parent;
           }, parent);
+
+export const attachApiToCustomDomain = (context: Construct, restApi: RestApi) => ({
+    basePath,
+    domainName,
+}: {
+    basePath: string;
+    domainName: string;
+}) => {
+    const resourceName = `${domainName}${basePath}`.replace('.', '');
+
+    new CfnBasePathMapping(context, resourceName, {
+        basePath,
+        domainName,
+        restApiId: restApi.restApiId,
+        stage: restApi.deploymentStage.stageName,
+    });
+};
