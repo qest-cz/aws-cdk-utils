@@ -1,4 +1,4 @@
-import { RestApi } from '@aws-cdk/aws-apigateway';
+import { CfnBasePathMapping, RestApi } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
 import { Construct } from '@aws-cdk/core';
 import { addMethod, addResource } from '../../../utils';
@@ -28,5 +28,16 @@ export class ExpressApi extends Construct {
         mapping(this.apiGateway.root);
 
         this.dashboard = new APIGatewayDashboard(this, { ApiName, handlers: [this.handler] });
+    }
+
+    public attachToApiDomain({ basePath, domainName }: { basePath: string; domainName: string }) {
+        const resourceName = `${domainName}${basePath}`.replace('.', '');
+
+        new CfnBasePathMapping(this, resourceName, {
+            basePath,
+            domainName,
+            restApiId: this.apiGateway.restApiId,
+            stage: this.apiGateway.deploymentStage.stageName,
+        });
     }
 }
