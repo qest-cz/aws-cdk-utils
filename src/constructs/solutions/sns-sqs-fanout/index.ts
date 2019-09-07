@@ -1,10 +1,10 @@
 import { Function } from '@aws-cdk/aws-lambda';
+import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources';
 import { Topic } from '@aws-cdk/aws-sns';
 import { SqsSubscription } from '@aws-cdk/aws-sns-subscriptions';
 import { Queue } from '@aws-cdk/aws-sqs';
 import { Construct } from '@aws-cdk/core';
 import { ILambdaContainer, IQueueContainer } from '../../../interfaces';
-import { SimpleQueue } from '../../aws-sqs/simple-queue';
 
 export interface SnsSqsFanoutProps {}
 
@@ -27,10 +27,11 @@ export class SnsSqsFanout extends Construct implements ILambdaContainer, IQueueC
     }
 
     public addLambdaOutput(consumer: Function): SqsLambdaSubscription {
-        const queue = new SimpleQueue(this, `${consumer.node.uniqueId}-Queue`);
+        const queue = new Queue(this, `${consumer.node.uniqueId}-Queue`);
 
         this.topic.addSubscription(new SqsSubscription(queue));
-        queue.addConsumerFunction(consumer);
+        queue.grantConsumeMessages(consumer);
+        consumer.addEventSource(new SqsEventSource(queue));
 
         this.outputs.push({ consumer, queue });
 
