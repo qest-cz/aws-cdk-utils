@@ -6,7 +6,9 @@ import { Queue } from '@aws-cdk/aws-sqs';
 import { Construct } from '@aws-cdk/core';
 import { ILambdaContainer, IQueueContainer } from '../../../interfaces';
 
-export interface SnsSqsFanoutProps {}
+export interface SnsSqsFanoutProps {
+    topic?: Topic;
+}
 
 export interface SqsLambdaSubscription {
     consumer: Function;
@@ -17,12 +19,17 @@ export class SnsSqsFanout extends Construct implements ILambdaContainer, IQueueC
     public readonly topic: Topic;
     public readonly outputs: SqsLambdaSubscription[];
 
-    constructor(scope: Construct, id: string, {  }: SnsSqsFanoutProps = {}) {
+    constructor(scope: Construct, id: string, props?: SnsSqsFanoutProps) {
         super(scope, id);
 
-        const topicName = `Topic`;
+        if (props && props.topic) {
+            this.topic = props.topic;
+        } else {
+            const topicName = `Topic`;
 
-        this.topic = new Topic(this, topicName);
+            this.topic = new Topic(this, topicName);
+        }
+
         this.outputs = [];
     }
 
