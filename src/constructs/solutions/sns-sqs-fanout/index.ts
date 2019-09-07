@@ -4,7 +4,6 @@ import { Topic } from '@aws-cdk/aws-sns';
 import { SqsSubscription } from '@aws-cdk/aws-sns-subscriptions';
 import { Queue } from '@aws-cdk/aws-sqs';
 import { Construct } from '@aws-cdk/core';
-import { ILambdaContainer, IQueueContainer } from '../../../interfaces';
 
 export interface SnsSqsFanoutProps {
     topic?: Topic;
@@ -15,7 +14,7 @@ export interface SqsLambdaSubscription {
     queue: Queue;
 }
 
-export class SnsSqsFanout extends Construct implements ILambdaContainer, IQueueContainer {
+export class SnsSqsFanout extends Construct {
     public readonly topic: Topic;
     public readonly outputs: SqsLambdaSubscription[];
 
@@ -43,13 +42,5 @@ export class SnsSqsFanout extends Construct implements ILambdaContainer, IQueueC
         this.outputs.push({ consumer, queue });
 
         return { consumer, queue };
-    }
-
-    public getFunctions(): Function[] {
-        return this.outputs.map(({ consumer }) => consumer);
-    }
-
-    public getQueues(): Queue[] {
-        return this.outputs.map(({ queue }) => queue);
     }
 }

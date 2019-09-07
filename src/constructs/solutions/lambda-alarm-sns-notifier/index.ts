@@ -4,14 +4,13 @@ import { Function } from '@aws-cdk/aws-lambda';
 import { Topic } from '@aws-cdk/aws-sns';
 import { LambdaSubscription } from '@aws-cdk/aws-sns-subscriptions';
 import { Construct } from '@aws-cdk/core';
-import { ILambdaContainer } from '../../../interfaces';
 
 export interface LambdaAlarmSNSNotifierProps {
     alarmSources?: Function[];
     handler: Function;
 }
 
-export class LambdaAlarmSNSNotifier extends Construct implements ILambdaContainer {
+export class LambdaAlarmSNSNotifier extends Construct {
     public readonly handler: Function;
     public readonly topic: Topic;
 
@@ -38,10 +37,6 @@ export class LambdaAlarmSNSNotifier extends Construct implements ILambdaContaine
         this.createErrorAlarm(lambda).addAlarmAction(new SnsAction(this.topic));
 
         this.createThrottleAlarm(lambda).addAlarmAction(new SnsAction(this.topic));
-    }
-
-    public getFunctions(): Function[] {
-        return [this.handler];
     }
 
     private createThrottleAlarm(lambda: Function) {
