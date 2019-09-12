@@ -8,6 +8,7 @@
     "url": "https://github.com/qest-cz/aws-cdk-utils"
   },
   "version": "0.0.10",
+  "keywords": ["aws", "aws-cdk", "devops", "cloudformation"],
   "license": "MIT",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
