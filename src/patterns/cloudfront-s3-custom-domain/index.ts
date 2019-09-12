@@ -1,4 +1,4 @@
-import { DnsValidatedCertificate } from '@aws-cdk/aws-certificatemanager';
+import { DnsValidatedCertificate, ICertificate } from '@aws-cdk/aws-certificatemanager';
 import { CloudFrontWebDistribution, ViewerProtocolPolicy } from '@aws-cdk/aws-cloudfront';
 import { AaaaRecord, AddressRecordTarget, ARecord, IHostedZone, ZoneDelegationRecord } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
@@ -8,6 +8,7 @@ import { Construct } from '@aws-cdk/core';
 export interface CloudFrontS3CustomDomainProps {
     bucket: Bucket;
     targetHostedZone: IHostedZone;
+    certificate?: ICertificate;
     delegateTo?: IHostedZone;
 }
 
@@ -15,9 +16,9 @@ export class CloudFrontS3CustomDomain extends Construct {
     public readonly bucket: Bucket;
     public readonly hostedZone: IHostedZone;
     public readonly distribution: CloudFrontWebDistribution;
-    public readonly cert: DnsValidatedCertificate;
+    public readonly cert: ICertificate;
 
-    constructor(scope: Construct, id: string, { bucket, targetHostedZone, delegateTo }: CloudFrontS3CustomDomainProps) {
+    constructor(scope: Construct, id: string, { bucket, targetHostedZone, certificate, delegateTo }: CloudFrontS3CustomDomainProps) {
         super(scope, id);
 
         const cloudfrontDistributionName = `Distribution`;
@@ -34,11 +35,15 @@ export class CloudFrontS3CustomDomain extends Construct {
             });
         }
 
-        this.cert = new DnsValidatedCertificate(this, certificateName, {
-            domainName: this.hostedZone.zoneName,
-            hostedZone: this.hostedZone,
-            region: 'us-east-1',
-        });
+        if (certificate) {
+            this.cert = certificate;
+        } else {
+            this.cert = new DnsValidatedCertificate(this, certificateName, {
+                domainName: this.hostedZone.zoneName,
+                hostedZone: this.hostedZone,
+                region: 'us-east-1',
+            });
+        }
 
         this.distribution = new CloudFrontWebDistribution(this, cloudfrontDistributionName, {
             defaultRootObject: 'index.html',
