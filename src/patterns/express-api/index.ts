@@ -1,6 +1,6 @@
 import { RestApi } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
-import { Construct } from '@aws-cdk/core';
+import { CfnOutput, Construct } from '@aws-cdk/core';
 import { APIGatewayDashboard } from '../../constructs';
 import { addMethod, addResource, attachApiToCustomDomain } from '../../utils';
 
@@ -30,7 +30,9 @@ export class ExpressApi extends Construct {
         this.dashboard = new APIGatewayDashboard(this, { ApiName, handlers: [this.handler] });
     }
 
-    public attachToApiDomain(basePath: string, domainName: string) {
+    public attachToApiDomain(domainName: string, basePath: string) {
         attachApiToCustomDomain(this, this.apiGateway)({ basePath, domainName });
+
+        new CfnOutput(this, 'ApiDomain', { value: `https://${domainName}/${basePath}` });
     }
 }
