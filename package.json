@@ -1,10 +1,16 @@
 {
-  "name": "aws-cdk-utils",
+  "name": "@qest/aws-cdk-utils",
+  "displayName": "@qest/aws-cdk-utils",
+  "description": "Collection of constructs and patterns for AWS-CDK.",
   "author": "Vít Habada <vithabada93@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qest-cz/aws-cdk-utils"
+  },
   "version": "0.0.9",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prettier:run": "prettier all --write \"src/**/*.ts\"",

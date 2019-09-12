@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "sourceMap": true,
     "inlineSources": true,
     "removeComments": true,
