@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/qest-cz/aws-cdk-utils"
   },
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.8.0",
+    "@aws-cdk/aws-certificatemanager": "1.8.0",
     "@aws-cdk/aws-cloudfront": "1.8.0",
     "@aws-cdk/aws-cloudwatch": "1.8.0",
     "@aws-cdk/aws-cloudwatch-actions": "1.8.0",
@@ -33,14 +34,13 @@
     "@aws-cdk/aws-lambda-event-sources": "1.8.0",
     "@aws-cdk/aws-route53": "1.8.0",
     "@aws-cdk/aws-route53-targets": "1.8.0",
+    "@aws-cdk/aws-s3": "1.8.0",
+    "@aws-cdk/aws-s3-deployment": "1.8.0",
     "@aws-cdk/aws-sns": "1.8.0",
     "@aws-cdk/aws-sns-subscriptions": "1.8.0",
     "@aws-cdk/aws-sqs": "1.8.0",
-    "@aws-cdk/aws-certificatemanager": "1.8.0",
-    "@aws-cdk/aws-s3": "1.8.0",
-    "@aws-cdk/aws-s3-deployment": "1.8.0",
-    "@aws-cdk/cx-api": "1.8.0",
-    "@aws-cdk/core": "1.8.0"
+    "@aws-cdk/core": "1.8.0",
+    "@aws-cdk/cx-api": "1.8.0"
   },
   "devDependencies": {
     "@types/node": "^12.7.2",
