@@ -29,7 +29,7 @@ export class WebsiteBucket extends Bucket {
         this.grantPublicAccess('*', 's3:GetObject');
 
         new BucketDeployment(this, bucketDeploymentname, {
-            source,
+            sources: [source],
             destinationBucket: this,
         });
 
