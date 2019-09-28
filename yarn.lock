@@ -518,6 +518,17 @@
   dependencies:
     "@aws-cdk/cx-api" "^1.9.0"
 
+"@aws-cdk/custom-resources@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/custom-resources/-/custom-resources-1.9.0.tgz#986ded64053a5978f4fa7291d4b8e07f71876be4"
+  integrity sha512-UTA19vSjosQ5mAU/+h2X8xnHr49F/8jYKu3wzFBSoVt87y3zjMzRQ1+06RRsrNl7VW+RPx3vcqft0hz3pPQ8kw==
+  dependencies:
+    "@aws-cdk/aws-cloudformation" "^1.9.0"
+    "@aws-cdk/aws-iam" "^1.9.0"
+    "@aws-cdk/aws-lambda" "^1.9.0"
+    "@aws-cdk/aws-sns" "^1.9.0"
+    "@aws-cdk/core" "^1.9.0"
+
 "@aws-cdk/cx-api@^1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/cx-api/-/cx-api-1.9.0.tgz#5eb2a5fc2a402342d37a80ea83155ddc306381a1"
