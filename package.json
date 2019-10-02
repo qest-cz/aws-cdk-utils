@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/qest-cz/aws-cdk-utils"
   },
-  "version": "0.0.14",
+  "version": "0.0.15",
   "keywords": [
     "aws",
     "aws-cdk",
