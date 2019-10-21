@@ -1,13 +1,10 @@
-import { CfnDeletionPolicy, CfnResource, IResource, RemovalPolicy } from '@aws-cdk/core';
-
-export const setDeletionPolicy = (resource: IResource, policy: CfnDeletionPolicy): void => {
-    const node = resource.node.defaultChild as CfnResource;
-
-    node.addOverride('DeletionPolicy', policy);
-};
+import { CfnResource, IResource, RemovalPolicy } from '@aws-cdk/core';
 
 export const setRemovalPolicy = (resource: IResource, policy: RemovalPolicy): void => {
-    const node = resource.node.findChild('Resource') as CfnResource;
+    let node = resource instanceof CfnResource ? resource : (resource.node.findChild('Resource') as CfnResource);
+    if (!node) {
+        node = resource.node.defaultChild as CfnResource;
+    }
 
     node.applyRemovalPolicy(policy);
 };
