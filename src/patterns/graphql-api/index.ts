@@ -1,10 +1,10 @@
-import { RestApi } from '@aws-cdk/aws-apigateway';
+import { RestApi, RestApiProps } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
 import { CfnOutput, Construct } from '@aws-cdk/core';
 import { APIGatewayDashboard } from '../../constructs';
 import { addMethod, addResource, attachApiToCustomDomain } from '../../utils';
 
-export interface GraphQLApiProps {
+export interface GraphQLApiProps extends RestApiProps {
     handler: Function;
 }
 
@@ -13,12 +13,12 @@ export class GraphQlApi extends Construct {
     public readonly apiGateway: RestApi;
     public readonly handler: Function;
 
-    constructor(scope: Construct, id: string, { handler }: GraphQLApiProps) {
+    constructor(scope: Construct, id: string, { handler, ...props }: GraphQLApiProps) {
         super(scope, id);
 
         const ApiName = id;
 
-        this.apiGateway = new RestApi(this, ApiName);
+        this.apiGateway = new RestApi(this, ApiName, props);
         this.handler = handler;
 
         const mapping = addResource('graphql', addMethod('ANY', this.handler), addMethod('OPTIONS', this.handler));
