@@ -1,7 +1,6 @@
 import { RestApi, RestApiProps } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
 import { CfnOutput, Construct } from '@aws-cdk/core';
-import { APIGatewayDashboard } from '../../constructs';
 import { addMethod, addResource, attachApiToCustomDomain } from '../../utils';
 
 export interface GraphQLApiProps extends RestApiProps {
@@ -9,7 +8,6 @@ export interface GraphQLApiProps extends RestApiProps {
 }
 
 export class GraphQlApi extends Construct {
-    public readonly dashboard: APIGatewayDashboard;
     public readonly apiGateway: RestApi;
     public readonly handler: Function;
 
@@ -23,8 +21,6 @@ export class GraphQlApi extends Construct {
 
         const mapping = addResource('graphql', addMethod('ANY', this.handler), addMethod('OPTIONS', this.handler));
         mapping(this.apiGateway.root);
-
-        this.dashboard = new APIGatewayDashboard(this, { ApiName, handlers: [this.handler] });
     }
 
     public attachToApiDomain(domainName: string, basePath: string) {

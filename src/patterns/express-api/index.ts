@@ -1,7 +1,6 @@
 import { RestApi, RestApiProps } from '@aws-cdk/aws-apigateway';
 import { Function } from '@aws-cdk/aws-lambda';
 import { CfnOutput, Construct } from '@aws-cdk/core';
-import { APIGatewayDashboard } from '../../constructs';
 import { addMethod, addResource, attachApiToCustomDomain } from '../../utils';
 
 export interface ExpressApiProps extends RestApiProps {
@@ -9,7 +8,6 @@ export interface ExpressApiProps extends RestApiProps {
 }
 
 export class ExpressApi extends Construct {
-    public readonly dashboard: APIGatewayDashboard;
     public readonly apiGateway: RestApi;
     public readonly handler: Function;
 
@@ -26,8 +24,6 @@ export class ExpressApi extends Construct {
 
         const mapping = addResource('{proxy+}', addMethod('ANY', this.handler), addMethod('OPTIONS', this.handler));
         mapping(this.apiGateway.root);
-
-        this.dashboard = new APIGatewayDashboard(this, { ApiName, handlers: [this.handler] });
     }
 
     public attachToApiDomain(domainName: string, basePath: string) {
