@@ -1,15 +1,13 @@
-import { Bucket, HttpMethods } from '@aws-cdk/aws-s3';
-import { BucketDeployment, ISource } from '@aws-cdk/aws-s3-deployment';
-import { CfnOutput, Construct } from '@aws-cdk/core';
+import { Bucket, BucketProps, HttpMethods } from '@aws-cdk/aws-s3';
+import { Construct } from '@aws-cdk/core';
 
-export interface WebsiteBucketProps {
-    source: ISource;
+export interface WebsiteBucketProps extends BucketProps {
     allowedHeaders?: string;
     allowedOrigins?: string;
 }
 
 export class WebsiteBucket extends Bucket {
-    constructor(scope: Construct, id: string, { source, allowedHeaders, allowedOrigins }: WebsiteBucketProps) {
+    constructor(scope: Construct, id: string, { allowedHeaders, allowedOrigins, ...props }: WebsiteBucketProps) {
         super(scope, id, {
             websiteIndexDocument: 'index.html',
             websiteErrorDocument: 'index.html',
@@ -22,17 +20,7 @@ export class WebsiteBucket extends Bucket {
                     exposedHeaders: ['ETag'],
                 },
             ],
+            ...props,
         });
-
-        const bucketDeploymentname = `BucketDeployment`;
-
-        this.grantPublicAccess('*', 's3:GetObject');
-
-        new BucketDeployment(this, bucketDeploymentname, {
-            sources: [source],
-            destinationBucket: this,
-        });
-
-        new CfnOutput(this, 'BucketWebsiteUrl', { value: this.bucketWebsiteUrl });
     }
 }
